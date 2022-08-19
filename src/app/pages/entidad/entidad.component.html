@@ -1,0 +1,85 @@
+<app-layout>
+  
+</app-layout>
+<app-title title="Entidad" icon = "supervisor_account">  
+    
+
+  <button mat-flat-button color="primary" matTooltip="ADD" (click)="abrirDialogo()">
+   
+      Nuevo
+  </button>
+  
+
+</app-title>
+<div class="example-container mat-elevation-z8">
+
+
+    <div class="container">
+      <mat-form-field>
+        <input matInput (keyup)="filtrar($event)" placeholder="Buscar ">
+      </mat-form-field>
+    
+    </div>
+   
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <ng-container matColumnDef="idEntidad">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> idEntidad </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.idEntidad}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tipoDocumento">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> TipoDocumento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipoDocumento.nombre}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="nroDocumento">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> nroDocumento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nroDocumento}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="razonSocial">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> razonSocial </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.razonSocial}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nombreComercial">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> nombreComercial </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombreComercial}} </mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="tipoContribuyente">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>tipoContribuyente  </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.tipoContribuyente.nombre}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="direccion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>direccion  </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.direccion}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="telefono">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>telefono  </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.telefono}} </mat-cell>
+      </ng-container>
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="abrirDialogo(element)">
+            <mat-icon>ballot</mat-icon>
+          </button>
+          <button mat-button color="accent" (click)="eliminar(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+  
+<br>
+
+
+

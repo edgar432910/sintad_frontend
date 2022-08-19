@@ -3,7 +3,13 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  HOST:'http://localhost:7070/api',
+  HOST2:'http://localhost:7070',
+
+  TOKEN_NAME: 'token',  
+  TOKEN_AUTH_USERNAME: 'sintadapp',
+  TOKEN_AUTH_PASSWORD: 'sintadcodex',
 };
 
 /*

@@ -1,0 +1,42 @@
+
+
+ <div fxLayout fxLayoutAlign="center center">
+     <div>
+        <p>Usuario: edgar432910@hotmail.com</p>
+        <p>contrasena: 1234</p>
+        <form fxLayout = "column"  [formGroup]="formGroup">
+          
+            <h2>Sintad</h2>
+        
+            <mat-form-field appearance ="outline">
+                <mat-label>Correo</mat-label>
+                <input type="text" matInput  formControlName ="email" required>
+                <mat-error *ngIf ="email?.hasError('required')"
+                    >El correo es obligatorio
+                 </mat-error>
+                
+                
+        
+            </mat-form-field>
+        
+            <mat-form-field appearance ="outline">
+                <mat-label>Constrasena</mat-label>
+                <input type="password" matInput  formControlName="password"
+                    (input) ="validateForm()" required>
+                <mat-error *ngIf ="password?.hasError('required')">La constrasena es obligaria </mat-error>
+                <mat-error *ngIf ="
+                password?.hasError('minlength') || 
+                password?.hasError('maxlength')"  
+        
+                >La constrasena debe estar entre 3 y 20 </mat-error>
+        
+            </mat-form-field>
+        
+            <button mat-raised-button color="primary" type="button" 
+                [disabled] = "formGroup.invalid" (click)="login()" >Ingresarr</button>
+            
+        </form>
+     </div>
+     
+
+ </div>

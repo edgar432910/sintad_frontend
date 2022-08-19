@@ -1,0 +1,80 @@
+<form class="example-container" [formGroup]="form"  (ngSubmit)="operar()" >
+    <div class="toolbar" fxLayout fxLayoutAlign="space-between" >
+        <div class ="info" fxLayout fxLayoutAlign = "start center" fxLayoutGap="10px" >
+
+            <h1> {{titulo}}</h1>
+        </div>
+        <div fxLayout fxLayoutAlign = "start center">
+            <button  (click)="cerrar()" mat-icon-button type="button"><mat-icon>close</mat-icon>
+            </button>
+        </div>
+       
+    </div>
+
+   
+    <div [hidden]="true">
+        <mat-form-field class="example-full-width">
+            <input matInput placeholder="ID" required formControlName="idTipoDocumento">
+        </mat-form-field>
+    </div> 
+
+    <div class="toolbar" fxLayout  fxLayoutGap="20px" > 
+        <mat-form-field appearance ="outline">
+            <mat-label >Nombre</mat-label>
+    
+            <input matInput placeholder="Nombre" required formControlName="nombre">
+            <mat-error  *ngIf="form.controls['nombre'].hasError('required')">
+                Este campo es obligatorio
+            </mat-error>
+            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
+                Este campo excede 40 los caracteres
+            </mat-error> -->
+        </mat-form-field>
+        <mat-form-field appearance ="outline">
+            <mat-label >Codigo</mat-label>
+    
+            <input matInput placeholder="Codigo" required formControlName="codigo">
+            <mat-error  *ngIf="form.controls['codigo'].hasError('required')">
+                Este campo es obligatorio
+            </mat-error>
+            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
+                Este campo excede 40 los caracteres
+            </mat-error> -->
+        </mat-form-field>
+     
+       
+
+    </div>
+    <div class="toolbar" fxLayout  fxLayoutGap="20px" > 
+        <mat-form-field appearance ="outline">
+            <mat-label >Descripcion</mat-label>
+    
+            <input matInput placeholder="Descripcion" required formControlName="descripcion">
+            <mat-error  *ngIf="form.controls['descripcion'].hasError('required')">
+                Este campo es obligatorio
+            </mat-error>
+            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
+                Este campo excede 40 los caracteres
+            </mat-error> -->
+        </mat-form-field>
+            
+        <mat-checkbox class="example-margin" formControlName="estado">
+            Activar
+        </mat-checkbox>
+    </div>
+    
+  
+ 
+
+    
+
+    <div fxLayout="row wrap"  fxLayoutAlign="center center">
+        <button mat-raised-button color="primary" type="submit" >
+            <mat-icon>done</mat-icon>
+            <span>Aceptar</span>
+        </button>
+    </div>
+   
+    
+   
+</form>

@@ -1,0 +1,67 @@
+<app-layout>
+  
+</app-layout>
+
+<app-title title="Tipo Documento" icon = "supervisor_account">  
+    
+
+  <button mat-flat-button color="primary" matTooltip="ADD" (click)="abrirDialogo()">
+   
+      Nuevo
+  </button>
+  
+
+</app-title>
+
+
+<div class="example-container mat-elevation-z8">
+
+
+    <div class="">
+      <mat-form-field>
+        <input matInput (keyup)="filtrar($event)" placeholder="Buscar ">
+      </mat-form-field>
+    </div>
+  
+    <mat-table [dataSource]="dataSource" matSort>
+  
+      <ng-container matColumnDef="idTipoDocumento">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> idTipoDocumento </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.idTipoDocumento}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="codigo">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Codigo </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.codigo}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nombre}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="descripcion">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.descripcion}} </mat-cell>
+      </ng-container>
+     
+    
+  
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button mat-button color="primary" (click)="abrirDialogo(element)">
+            <mat-icon>ballot</mat-icon>
+          </button>
+          <button mat-button color="accent" (click)="eliminar(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;">
+      </mat-row>
+    </mat-table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
+  
+<br>
