@@ -1,6 +1,4 @@
-<app-layout>
-  
-</app-layout>
+
 
 <app-title title="Tipo Documento" icon = "supervisor_account">  
     
@@ -18,7 +16,7 @@
 
 
     <div class="">
-      <mat-form-field>
+      <mat-form-field class="margen">
         <input matInput (keyup)="filtrar($event)" placeholder="Buscar ">
       </mat-form-field>
     </div>
@@ -48,7 +46,7 @@
         <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
         <mat-cell *matCellDef="let element">
           <button mat-button color="primary" (click)="abrirDialogo(element)">
-            <mat-icon>ballot</mat-icon>
+            <mat-icon>edit</mat-icon>
           </button>
           <button mat-button color="accent" (click)="eliminar(element)">
             <mat-icon>delete</mat-icon>

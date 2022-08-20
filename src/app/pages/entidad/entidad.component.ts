@@ -18,7 +18,7 @@ export class EntidadComponent implements OnInit {
   dataSource:MatTableDataSource<Entidad>;
   displayedColumns: string[] = ['idEntidad','tipoDocumento', 'nroDocumento', 'razonSocial',
                                 'nombreComercial','tipoContribuyente','direccion','telefono', 'acciones'];
-
+  error:string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSortHeader) sort: MatSort;
   constructor(private entidadService: EntidadService, private snackBar: MatSnackBar,private dialog: MatDialog) { }
@@ -77,15 +77,27 @@ export class EntidadComponent implements OnInit {
         this.entidadService.eliminar(entidad.idEntidad).pipe(switchMap( ()=> {
           return this.entidadService.listar();
         }))      
-        .subscribe(data => {
-          this.entidadService.setEntidadCambio(data);
-          this.entidadService.setMensajeCambio('SE ELIMINO');
+       
+        .subscribe({
+          next:data => {
+            this.entidadService.setEntidadCambio(data);
+            this.entidadService.setMensajeCambio('SE ELIMINO');
+            Swal.fire(
+              'ELIMINADO',
+              'ENTIDAD ELIMINADO',
+              'success'
+            )
+          },
+          error:err =>{
+            this.error = err.error.mensaje;
+            Swal.fire(
+              'ERRORR',
+              this.error,
+              'error'
+            )
+          }
         });
-        Swal.fire(
-          'ELIMINADO',
-          'ESTUDIANTE ELIMINADO',
-          'success'
-        )
+       
       }
     })
 

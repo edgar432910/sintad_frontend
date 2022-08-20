@@ -22,7 +22,7 @@
         <mat-form-field appearance ="outline">
             <mat-label >Nombre</mat-label>
     
-            <input matInput placeholder="Nombre" required formControlName="nombre">
+            <input matInput placeholder="Nombre"  formControlName="nombre">
             <mat-error  *ngIf="form.controls['nombre'].hasError('required')">
                 Este campo es obligatorio
             </mat-error>
@@ -37,7 +37,11 @@
 
     </div>
    
-  
+    <div fxLayout="row wrap"  fxLayoutAlign="center center" *ngIf="error!=''">
+        <mat-error  >
+            {{error}}
+        </mat-error>
+    </div>
  
 
     

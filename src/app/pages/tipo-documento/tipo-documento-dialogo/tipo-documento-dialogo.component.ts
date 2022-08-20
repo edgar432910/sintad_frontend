@@ -14,7 +14,7 @@ export class TipoDocumentoDialogoComponent implements OnInit {
   tipoDocumento:TipoDocumento;
   form:FormGroup;
   titulo:string;
-
+  error:string;
 
     constructor(   private dialogRef: MatDialogRef<TipoDocumentoDialogoComponent>,
     @Inject(MAT_DIALOG_DATA) private data: TipoDocumento,
@@ -31,8 +31,8 @@ export class TipoDocumentoDialogoComponent implements OnInit {
      this.form= this.fb.group({
         idTipoDocumento   :[this.tipoDocumento.idTipoDocumento],
         codigo            :[this.tipoDocumento.codigo , [Validators.required,Validators.maxLength(20)]],
-        nombre            :[this.tipoDocumento.nombre , [Validators.required,Validators.maxLength(50)]],
-        descripcion       :[this.tipoDocumento.descripcion , [Validators.required,Validators.maxLength(100)]],
+        nombre            :[this.tipoDocumento.nombre , [Validators.required,Validators.maxLength(100)]],
+        descripcion       :[this.tipoDocumento.descripcion, [Validators.maxLength(200)]],
         estado            :[this.tipoDocumento.estado , [Validators.required]]
       })
       
@@ -43,9 +43,9 @@ export class TipoDocumentoDialogoComponent implements OnInit {
 
      this.form= this.fb.group({
         idTipoDocumento   :[0],
-        codigo            :[ , [Validators.required]],
-        nombre            :[ , [Validators.required]],
-        descripcion       :[ , [Validators.required]],
+        codigo            :[ , [Validators.required,Validators.maxLength(20)]],
+        nombre            :[ , [Validators.required,Validators.maxLength(100)]],
+        descripcion       :[ , [Validators.maxLength(200)]],
         estado            :["false" , [Validators.required]]
 
       })
@@ -61,7 +61,7 @@ export class TipoDocumentoDialogoComponent implements OnInit {
       return;
     }
     
-    this.form.value['estado']  = this.form.value['estado']?1:0;
+    this.form.value['estado']  = this.form.value['estado']?true:false;
    
     if (this.tipoDocumento != null && this.tipoDocumento.idTipoDocumento > 0) {
      
@@ -70,21 +70,40 @@ export class TipoDocumentoDialogoComponent implements OnInit {
       this.tipoDocumentoService.modificar(this.form.value).pipe(switchMap( ()=> {
         return this.tipoDocumentoService.listar();
       }))
-      .subscribe(data => {
-        this.tipoDocumentoService.setTipoDocumentoCambio(data);
-        this.tipoDocumentoService.setMensajeCambio('SE MODIFICO');
+    
+      .subscribe({
+        next:data => {
+            this.tipoDocumentoService.setTipoDocumentoCambio(data);
+          this.tipoDocumentoService.setMensajeCambio('SE MODIFICO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+        }
       });
+
     }else{
       //REGISTRAR
       this.tipoDocumentoService.registrar(this.form.value).pipe(switchMap( ()=> {
         return this.tipoDocumentoService.listar();
       }))      
-      .subscribe(data => {
-        this.tipoDocumentoService.setTipoDocumentoCambio(data);
-        this.tipoDocumentoService.setMensajeCambio('SE REGISTRO');
+      .subscribe({
+        next:data => {
+            this.tipoDocumentoService.setTipoDocumentoCambio(data);
+          this.tipoDocumentoService.setMensajeCambio('SE REGISTRO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+        }
       });
+
+      
     }
-    this.cerrar();
+    if(this.error=== undefined){
+      this.cerrar();
+    }
+
+      
+   
   }
 
   cerrar() {

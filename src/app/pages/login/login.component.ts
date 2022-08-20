@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
     
       // console.log(data);
       localStorage.setItem(environment.TOKEN_NAME, data.access_token);    
-      this.router.navigate(['/entidad']);
+      this.router.navigate(['/pages/entidad']);
     });
   }
   

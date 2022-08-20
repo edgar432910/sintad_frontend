@@ -19,7 +19,7 @@ export class EntidadDialogoComponent implements OnInit {
   form:FormGroup;
   tipoContribuyentes:TipoContribuyente[];
   tipoDocumentos:TipoDocumento[];
- 
+  error:string;
   titulo:string;
 
 
@@ -46,12 +46,12 @@ export class EntidadDialogoComponent implements OnInit {
      this.form= this.fb.group({
          idEntidad:[this.entidad.idEntidad],
          tipoDocumento      :[this.entidad.tipoDocumento.idTipoDocumento , [Validators.required]],
-         nroDocumento       :[this.entidad.nroDocumento , [Validators.required]],
-         razonSocial        :[this.entidad.razonSocial , [Validators.required]],
-         nombreComercial    :[this.entidad.nombreComercial , [Validators.required]],
+         nroDocumento       :[this.entidad.nroDocumento , [Validators.required, Validators.maxLength(25)]],
+         razonSocial        :[this.entidad.razonSocial , [Validators.required,  Validators.maxLength(100)]],
+         nombreComercial    :[this.entidad.nombreComercial, [Validators.maxLength(100)] ],
          tipoContribuyente  :[this.entidad.tipoContribuyente.idTipoContribuyente , [Validators.required]],
-         direccion          :[this.entidad.direccion , [Validators.required]],
-         telefono           :[this.entidad.telefono , [Validators.required,Validators.maxLength(40)]],
+         direccion          :[this.entidad.direccion , [Validators.required,  Validators.maxLength(250)]],
+         telefono           :[this.entidad.telefono ,[Validators.maxLength(50)] ],
          estado    :[this.entidad.estado , [Validators.required]]
         })
       
@@ -62,12 +62,12 @@ export class EntidadDialogoComponent implements OnInit {
      this.form= this.fb.group({
         idEntidad:[0],
         tipoDocumento      :[ , [Validators.required]],
-        nroDocumento       :[ , [Validators.required]],
-        razonSocial        :[ , [Validators.required]],
-        nombreComercial    :[ , [Validators.required]],
+        nroDocumento       :[ , [Validators.required,  Validators.maxLength(25)]],
+        razonSocial        :[ , [Validators.required,  Validators.maxLength(100)]],
+        nombreComercial    :[ , [Validators.maxLength(100)]],
         tipoContribuyente  :[ , [Validators.required]],
-        direccion          :[ , [Validators.required]],
-        telefono           :[ , [Validators.required]],
+        direccion          :[ , [Validators.required ,  Validators.maxLength(250)]],
+        telefono           :[ , [Validators.maxLength(50)]],
         estado    :["false" , [Validators.required]]
      })
      
@@ -87,7 +87,7 @@ export class EntidadDialogoComponent implements OnInit {
     tipoContribuyente.idTipoContribuyente= this.form.value['tipoContribuyente'];
     this.form.value['tipoDocumento']      = tipoDocumento;
     this.form.value['tipoContribuyente']  = tipoContribuyente;
-    this.form.value['estado']  = this.form.value['estado']?1:0;
+    this.form.value['estado']  = this.form.value['estado']?true:false;
 
     // let marcafinal=new Marca();
     // marcafinal.idMarca  =   this.form.value['id'];
@@ -103,21 +103,35 @@ export class EntidadDialogoComponent implements OnInit {
       this.entidadService.modificar(this.form.value).pipe(switchMap( ()=> {
         return this.entidadService.listar();
       }))
-      .subscribe(data => {
-        this.entidadService.setEntidadCambio(data);
-        this.entidadService.setMensajeCambio('SE MODIFICO');
+      .subscribe({
+        next:data => {
+          this.entidadService.setEntidadCambio(data);
+          this.entidadService.setMensajeCambio('SE MODIFICO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+        }
       });
+      
     }else{
       //REGISTRAR
       this.entidadService.registrar(this.form.value).pipe(switchMap( ()=> {
         return this.entidadService.listar();
       }))      
-      .subscribe(data => {
-        this.entidadService.setEntidadCambio(data);
-        this.entidadService.setMensajeCambio('SE REGISTRO');
+      .subscribe({
+        next:data => {
+          this.entidadService.setEntidadCambio(data);
+          this.entidadService.setMensajeCambio('SE REGISTRO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+        }
       });
     }
-    this.cerrar();
+    if(this.error=== undefined){
+      this.cerrar();
+    }
+
   }
 
   cerrar() {

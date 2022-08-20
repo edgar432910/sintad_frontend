@@ -18,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class TipoDocumentoComponent implements OnInit {
   dataSource:MatTableDataSource<TipoDocumento>;
   displayedColumns: string[] = ['idTipoDocumento','codigo','nombre','descripcion', 'acciones'];
-
+  error:string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSortHeader) sort: MatSort;
@@ -79,15 +79,28 @@ export class TipoDocumentoComponent implements OnInit {
         this.tipoDocumentoService.eliminar(tipoDocumento.idTipoDocumento).pipe(switchMap( ()=> {
           return this.tipoDocumentoService.listar();
         }))      
-        .subscribe(data => {
-          this.tipoDocumentoService.setTipoDocumentoCambio(data);
-          this.tipoDocumentoService.setMensajeCambio('SE ELIMINO');
+        
+
+        .subscribe({
+          next:data => {
+            this.tipoDocumentoService.setTipoDocumentoCambio(data);
+            this.tipoDocumentoService.setMensajeCambio('SE ELIMINO');
+            Swal.fire(
+              'ELIMINADO',
+              'TIPO DOCUMENTO ELIMINADO',
+              'success'
+            )
+          },
+          error:err =>{
+            this.error = err.error.mensaje;
+            Swal.fire(
+              'ERRORR',
+              'LA TABLA ENTIDAD DEPENDE DE ESTE VALOR',
+              'error'
+            )
+          }
         });
-        Swal.fire(
-          'ELIMINADO',
-          'ESTUDIANTE ELIMINADO',
-          'success'
-        )
+       
       }
     })
 

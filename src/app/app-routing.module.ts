@@ -14,35 +14,24 @@ const routes: Routes = [
     path: 'login', component: LoginComponent, 
 
   },
-  {
-    path: 'layout', component: LayoutComponent, 
-
-  },
+ 
 
   {
     path: '',redirectTo:'login', pathMatch:'full' 
 
   },
-  {
-    path: 'entidad', component: EntidadComponent, 
-    canActivate:[GuardService]
 
-  },
-  {
-    path: 'tipoDocumento', component: TipoDocumentoComponent, 
-    canActivate:[GuardService]
-  },
-  
-  {
-    path: 'tipoContribuyente', component: TipoContribuyenteComponent, 
-    canActivate:[GuardService]
-  },
+ 
 
-  // {
-  //   path:'pages',
-  //   component:EntidadComponent,
-  //   loadChildren:()=> import('./pages/pages.module').then(m=> m.PagesModule)
-  // }
+  {
+    path:'pages',
+    component:LayoutComponent,
+    loadChildren:()=> import('./pages/pages.module').then(m=> m.PagesModule)
+  },
+  { 
+    path:'**', 
+    redirectTo:"pages"
+  }
  
 ];
 

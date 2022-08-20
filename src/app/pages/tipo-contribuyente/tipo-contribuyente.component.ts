@@ -18,7 +18,7 @@ import { switchMap } from 'rxjs';
 export class TipoContribuyenteComponent implements OnInit {
   dataSource:MatTableDataSource<TipoContribuyente>;
   displayedColumns: string[] = ['idTipoContribuyente','nombre', 'acciones'];
-
+  error:string;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSortHeader) sort: MatSort;
   constructor(private tipoContribuyenteService: TipoContribuyenteService, private snackBar: MatSnackBar,private dialog: MatDialog) { }
@@ -78,15 +78,26 @@ export class TipoContribuyenteComponent implements OnInit {
         this.tipoContribuyenteService.eliminar(tipoContribuyente.idTipoContribuyente).pipe(switchMap( ()=> {
           return this.tipoContribuyenteService.listar();
         }))      
-        .subscribe(data => {
-          this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
-          this.tipoContribuyenteService.setMensajeCambio('SE ELIMINO');
+        .subscribe({
+          next:data => {
+            this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
+            this.tipoContribuyenteService.setMensajeCambio('SE ELIMINO');
+            Swal.fire(
+              'ELIMINADO',
+              'TIPO CONTRIBUYENTE ELIMINADO',
+              'success'
+            )
+          },
+          error:err =>{
+            this.error = err.error.mensaje;
+            Swal.fire(
+              'ERRORR',
+              'LA TABLA ENTIDAD DEPENDE DE ESTE VALOR',
+              'error'
+            )
+          }
         });
-        Swal.fire(
-          'ELIMINADO',
-          'ESTUDIANTE ELIMINADO',
-          'success'
-        )
+       
       }
     })
 

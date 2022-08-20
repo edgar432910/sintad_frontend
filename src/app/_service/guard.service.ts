@@ -17,7 +17,6 @@ export class GuardService implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot)  {
     // Usuario logueado
     let rpta = this.loginService.estaLogueado();
-    console.log({rpta});
     if (!rpta) {
       this.loginService.cerrarSesion();
       this.router.navigate(['/login']);
@@ -29,30 +28,13 @@ export class GuardService implements CanActivate {
     const helper = new JwtHelperService();
     let token = localStorage.getItem(environment.TOKEN_NAME);
     if (!helper.isTokenExpired(token)) {
-        // verificar si tienes el rol
+       
         let url = state.url;
-        console.log(url);
-              const decodedToken = helper.decodeToken(token);
-            return true;
-              // return this.menuService.listarPorUsuario(decodedToken.user_name).pipe(map((data:Menu[]) =>{
-              //      this.menuService.setMenuCambio(data);
-
-              //     let cont = 0;
-              //     for (let m of data) {
-              //       if (url.startsWith(m.url)) {
-              //         cont++;
-              //         break;
-              //       }
-              //     }
-                
-              //     if (cont > 0) {
-              //       return true;
-              //     } else {
-              //       this.router.navigate(['/pages/not-403']);
-              //       return false;
-              //     }
-              // }));
+        
+        const decodedToken = helper.decodeToken(token);
+        return true;
           
+      
      
         
     } else{

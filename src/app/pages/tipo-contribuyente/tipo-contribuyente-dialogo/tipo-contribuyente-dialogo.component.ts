@@ -13,7 +13,7 @@ import { TipoContribuyenteService } from '../../../_service/tipo-contribuyente.s
 export class TipoContribuyenteDialogoComponent implements OnInit {
   tipoContribuyente:TipoContribuyente;
   form:FormGroup;
-  
+  error:string;
   titulo:string;
 
     constructor(   private dialogRef: MatDialogRef<TipoContribuyenteDialogoComponent>,
@@ -41,7 +41,7 @@ export class TipoContribuyenteDialogoComponent implements OnInit {
       //REGISTRAR
      this.form= this.fb.group({
         idTipoContribuyente   :[0],
-        nombre      :[ , [Validators.required]],
+        nombre      :[ , [Validators.required,Validators.maxLength(50)]],
         estado    :["false" , [Validators.required]]
       })
      
@@ -56,7 +56,7 @@ export class TipoContribuyenteDialogoComponent implements OnInit {
       return;
     }
     
-    this.form.value['estado']  = this.form.value['estado']?1:0;
+    this.form.value['estado']  = this.form.value['estado']?true:false;
    
     if (this.tipoContribuyente != null && this.tipoContribuyente.idTipoContribuyente > 0) {
      
@@ -65,21 +65,43 @@ export class TipoContribuyenteDialogoComponent implements OnInit {
       this.tipoContribuyenteService.modificar(this.form.value).pipe(switchMap( ()=> {
         return this.tipoContribuyenteService.listar();
       }))
-      .subscribe(data => {
-        this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
-        this.tipoContribuyenteService.setMensajeCambio('SE MODIFICO');
+      // .subscribe(data => {
+      //   this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
+      //   this.tipoContribuyenteService.setMensajeCambio('SE MODIFICO');
+      // });
+      .subscribe({
+        next:data => {
+          this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
+          this.tipoContribuyenteService.setMensajeCambio('SE MODIFICO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+        }
       });
     }else{
       //REGISTRAR
       this.tipoContribuyenteService.registrar(this.form.value).pipe(switchMap( ()=> {
         return this.tipoContribuyenteService.listar();
       }))      
-      .subscribe(data => {
-        this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
-        this.tipoContribuyenteService.setMensajeCambio('SE REGISTRO');
+      // .subscribe(data => {
+      //   this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
+      //   this.tipoContribuyenteService.setMensajeCambio('SE REGISTRO');
+      // });
+      .subscribe({
+        next:data => {
+          this.tipoContribuyenteService.setTipoContribuyenteCambio(data);
+          this.tipoContribuyenteService.setMensajeCambio('SE REGISTRO');
+        },
+        error:err =>{
+          this.error = err.error.mensaje;
+          
+        }
       });
     }
-    this.cerrar();
+    
+    if(this.error=== undefined){
+      this.cerrar();
+    }
   }
 
   cerrar() {

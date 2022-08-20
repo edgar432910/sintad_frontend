@@ -1,15 +1,22 @@
-<mat-toolbar color="" class="">
-    
-    <button mat-button routerLink="/entidad" class="ms-3">
+<mat-toolbar color="primary" class="">
+   <div fxLayout fxLayoutAlign="center center">
+    <button mat-button routerLink="/pages/entidad" class="ms-3">
         Entidad
     </button>
-    <button mat-button routerLink="/tipoContribuyente" class="ms-3">
-        TipoContribuyente
+    <button mat-button routerLink="/pages/tipoContribuyente" class="ms-3">
+        Tipo Contribuyente
     </button>
-    <button mat-button routerLink="/tipoDocumento" class="ms-3">
-        tipoDocumento
+    <button mat-button routerLink="/pages/tipoDocumento" class="ms-3">
+        Tipo Documento
     </button>
+   </div> 
+   
 
 </mat-toolbar>
+ <app-container>
+        
+        <router-outlet></router-outlet>
+  
+      </app-container>
  
 

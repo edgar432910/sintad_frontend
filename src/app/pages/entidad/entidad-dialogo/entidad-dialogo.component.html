@@ -15,11 +15,11 @@
    
     <div [hidden]="true">
         <mat-form-field class="example-full-width">
-            <input matInput placeholder="ID" required formControlName="idEntidad">
+            <input matInput placeholder="ID"  formControlName="idEntidad">
         </mat-form-field>
     </div>
     <div class="toolbar" fxLayout  fxLayoutGap="20px" >
-        <!-- TIPODOC -->
+       
         <mat-form-field appearance ="outline">
             <mat-label >Tipo Documento</mat-label>
             <mat-select formControlName="tipoDocumento">
@@ -34,13 +34,11 @@
         <mat-form-field appearance ="outline">
             <mat-label >Numero de Documento</mat-label>
     
-            <input matInput placeholder="nroDocumento" required formControlName="nroDocumento">
+            <input matInput placeholder="nroDocumento"  formControlName="nroDocumento">
             <mat-error  *ngIf="form.controls['nroDocumento'].hasError('required')">
                 Este campo es obligatorio
             </mat-error>
-            <!-- <mat-error  *ngIf="form.controls['tipoDocumento'].hasError('maxlength')">
-                Este campo excede 40 los caracteres
-            </mat-error> -->
+      
         </mat-form-field>
        
     </div>
@@ -49,24 +47,17 @@
         <mat-form-field appearance ="outline">
             <mat-label >Razon Social</mat-label>
     
-            <input matInput placeholder="Razon Social" required formControlName="razonSocial">
+            <input matInput placeholder="Razon Social"  formControlName="razonSocial">
             <mat-error  *ngIf="form.controls['razonSocial'].hasError('required')">
                 Este campo es obligatorio
             </mat-error>
-            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
-                Este campo excede 40 los caracteres
-            </mat-error> -->
+           
         </mat-form-field>
         <mat-form-field appearance ="outline">
             <mat-label >Nombre Comercial</mat-label>
     
-            <input matInput placeholder="nombreComercial" required formControlName="nombreComercial">
-            <mat-error  *ngIf="form.controls['nombreComercial'].hasError('required')">
-                Este campo es obligatorio
-            </mat-error>
-            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
-                Este campo excede 40 los caracteres
-            </mat-error> -->
+            <input matInput placeholder="nombreComercial"  formControlName="nombreComercial">
+            
         </mat-form-field>
       
         
@@ -87,13 +78,14 @@
         <mat-form-field appearance ="outline">
             <mat-label >Direccion</mat-label>
     
-            <input matInput placeholder="direccion" required formControlName="direccion">
+            <input matInput placeholder="direccion"  formControlName="direccion">
             <mat-error  *ngIf="form.controls['direccion'].hasError('required')">
                 Este campo es obligatorio
             </mat-error>
-            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
-                Este campo excede 40 los caracteres
-            </mat-error> -->
+            <mat-error  *ngIf="form.controls['direccion'].hasError('maxLength')">
+                Este campo excedio 250
+            </mat-error>
+           
         </mat-form-field>
         
       
@@ -103,28 +95,27 @@
         <mat-form-field appearance ="outline">
             <mat-label >Telefono</mat-label>
     
-            <input matInput placeholder="telefono" required formControlName="telefono">
-            <mat-error  *ngIf="form.controls['telefono'].hasError('required')">
-                Este campo es obligatorio
+            <input matInput placeholder="telefono"  formControlName="telefono">
+            <mat-error  *ngIf="form.controls['telefono'].hasError('maxlength')">
+                Este campo excedio 50
             </mat-error>
-            <!-- <mat-error  *ngIf="form.controls[''].hasError('maxlength')">
-                Este campo excede 40 los caracteres
-            </mat-error> -->
+           
         </mat-form-field>
 
-        <!-- formControlName="fechaNacimiento" -->
-        <!-- <mat-form-field appearance ="outline"> -->
         
             <mat-checkbox class="example-margin" formControlName="estado">
                 Activar
             </mat-checkbox>
     
             
-        <!-- </mat-form-field> -->
     </div>
    
   
- 
+    <div fxLayout="row wrap"  fxLayoutAlign="center center" *ngIf="error!=''">
+        <mat-error  >
+            {{error}}
+        </mat-error>
+    </div>
 
     
 
